@@ -1,4 +1,5 @@
 import { Newspaper, Images } from "lucide-react";
+import { motion } from "framer-motion";
 
 const mockNews = [
   {
@@ -46,14 +47,27 @@ const NewsGallery = () => {
         </div>
         <div className="grid md:grid-cols-3 gap-6">
           {mockNews.map((n, i) => (
-            <article key={i} className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition">
-              <img src={n.image} alt={n.title} className="h-40 w-full object-cover" />
+            <motion.article
+              key={i}
+              className="bg-white rounded-xl overflow-hidden shadow-sm ring-1 ring-emerald-100 hover:shadow-md transition"
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.05 * i }}
+            >
+              <motion.img
+                src={n.image}
+                alt={n.title}
+                className="h-40 w-full object-cover"
+                whileHover={{ scale: 1.04 }}
+                transition={{ type: "spring", stiffness: 220, damping: 18 }}
+              />
               <div className="p-4">
                 <p className="text-xs text-emerald-700 mb-1">{n.date}</p>
                 <h4 className="font-semibold text-gray-900">{n.title}</h4>
                 <p className="text-sm text-gray-600 mt-2">{n.excerpt}</p>
               </div>
-            </article>
+            </motion.article>
           ))}
         </div>
       </div>
@@ -65,8 +79,18 @@ const NewsGallery = () => {
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
           {galleryImages.map((src, i) => (
-            <img key={i} src={src} alt={`Galeri ${i + 1}`} className="h-40 w-full object-cover rounded-lg" />)
-          )}
+            <motion.img
+              key={src}
+              src={src}
+              alt={`Galeri ${i + 1}`}
+              className="h-40 w-full object-cover rounded-lg"
+              whileHover={{ scale: 1.03 }}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.45, delay: 0.04 * i }}
+            />
+          ))}
         </div>
       </div>
     </section>
